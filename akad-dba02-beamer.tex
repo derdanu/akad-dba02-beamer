@@ -136,7 +136,6 @@ morestring=[b]",
 \section{Werkzeuge}
 \begin{frame} %%Eine Folie
   \frametitle{verwendete Werkzeuge} %%Folientitel
-
   \begin{block}{}
 	  \begin{itemize}
   		\item > PHP 5.3
@@ -146,7 +145,6 @@ morestring=[b]",
   		\item Dia \footnote{\url{http://live.gnome.org/Dia}}
 	  \end{itemize}
   \end{block}  
-  
 \end{frame}
 
 
@@ -159,16 +157,34 @@ morestring=[b]",
 
 \subsection{UML Modell}
 \begin{frame} %%Eine Folie
-
+  \frametitle{UML Modell} %%Folientitel
+  	\begin{figure}
+	   \includegraphics[scale=0.4]{akad_logo.png}
+		\caption{UML Modell}
+	\end{figure}
 \end{frame}
 
 \subsection{Relationen Modell}
 \begin{frame} %%Eine Folie
-
+\begin{block}{Relationen Modell}		
+	\begin{itemize}[]
+		\item Punkt 1
+		\item Punkt 2
+		\item und der dritte Punkt
+	\end{itemize}
+\end{block}
 \end{frame}
+
 
 \subsection{SQL DDL}
 \begin{frame} %%Eine Folie
+\begin{block}{SQL Data Definition Language}		
+	\begin{itemize}[]
+		\item Punkt 1
+		\item Punkt 2
+		\item und der dritte Punkt
+	\end{itemize}
+\end{block}
 
 \end{frame}
 
@@ -184,9 +200,9 @@ morestring=[b]",
   \frametitle{> PHP 5.3} %%Folientitel
   \begin{block}{}
 	  \begin{itemize}
-  		\item OOP
+  		\item OOP \footnote{Objektorientierte Programmierung}
 		\item Namespaces
-  		\item Autoloader
+  		\item Klassen Autoloader
 	  \end{itemize}
   \end{block} 
 \end{frame}
@@ -196,40 +212,80 @@ morestring=[b]",
   \frametitle{Design Pattern} %%Folientitel
   \begin{block}{}
 	  \begin{itemize}
+  		\item Singleton für Konfiguration
   		\item MVC \footnote{Modell View Controller}
-  		\item Singleton 
 	  \end{itemize}
   \end{block} 
 \end{frame}
 
+\begin{frame}[fragile] %%Eine Folie
+\frametitle{Singleton und Konfigruation in INI Datei} %%Folientitel
+
+\begin{lstlisting}[language=PHP]
+database_type = mysql
+database_port = 3306
+database_name = dba02
+database_host = localhost
+database_user = dbuser
+database_pass = supersicherundextremgeheim
+database_verbose = 0
+application_debugging = 0
+\end{lstlisting} 
+
+\begin{lstlisting}[language=PHP]
+$conf = \Config::getInstance();
+$debug = $conf->application_debugging;
+\end{lstlisting} 
+
+\end{frame}
+
+
+\begin{frame} %%Eine Folie
+\frametitle{MVC} %%Folientitel
+\begin{figure}
+\includegraphics[scale=0.4]{MVC-Process.png}
+\caption{Wikipedia MVC \\ \tiny{\textcolor{gray}{\url{http://en.wikipedia.org/wiki/File:MVC-Process.png}}}}
+\end{figure}
+\end{frame}
+
+
 \subsection{Controller}
 \begin{frame} %%Eine Folie
-  \frametitle{Controller} %%Folientitel
+  \frametitle{Die Steuerung} %%Folientitel
   \begin{block}{}
 	  \begin{itemize}
-  		\item Interface
+  		\item Interface zwischen Model und View
+  		\item Saubere Codekapselung
 	  \end{itemize}
   \end{block} 
 \end{frame}
 
 \subsection{View}
-\begin{frame} %%Eine Folie
-  \frametitle{View} %%Folientitel
+\begin{frame}[fragile] %%Eine Folie
+  \frametitle{Präsentation} %%Folientitel
   \begin{block}{}
 	  \begin{itemize}
-  		\item Template Engine
-  		\item Bootstrap
+  		\item eigene Template Engine
+  		\item CSS Twitter Bootstrap \footnote{\url{http://getbootstrap.com/}}
 	  \end{itemize}
-  \end{block} 
+  \end{block}
+  
+\begin{lstlisting}[language=PHP]
+$this->view->setTemplate('surveys');
+$this->view->assign('surveys', $this->model->getSurveys());
+$this->view->display();
+\end{lstlisting} 
+
 \end{frame}
 
-\subsection{Modell}
+\subsection{Model}
 \begin{frame} %%Eine Folie
   \frametitle{Modell} %%Folientitel
   \begin{block}{}
 	  \begin{itemize}
   		\item PDO \footnote{PHP Data Objects}
   		\item Prepared Statements
+  		\item SQL-Injection Vorbeugung
 	  \end{itemize}
   \end{block} 
 \end{frame}
