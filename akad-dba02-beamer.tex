@@ -52,7 +52,7 @@ morestring=[b]",
   numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
   rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
   showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
-  showstringspaces=true,          % underline spaces within strings only
+  showstringspaces=false,          % underline spaces within strings only
   showtabs=true,                  % show tabs within strings adding particular underscores
   stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
   stringstyle=\color{mymauve},     % string literal style
@@ -65,8 +65,8 @@ morestring=[b]",
 \usecolortheme[named=OliveGreen]{structure}
 \renewcommand\thempfootnote{\arabic{mpfootnote}}
 
-\newcommand*{\Title}{Präsentation der Website Mega Busreisen} %Titel
-\subtitle{Modul INT02} %Untertitel
+\newcommand*{\Title}{Präsentation der Umfragewebseite} %Titel
+\subtitle{Modul DBA02} %Untertitel
 \newcommand*{\Author}{Daniel Falkner + Eugen Grinschuk} %Name
 \institute{AKAD Pinneberg + Stuttgart} %Uni
 \titlegraphic{\includegraphics[scale=0.2]{akad_logo.png}} %Logo
@@ -221,7 +221,7 @@ morestring=[b]",
 \begin{frame}[fragile] %%Eine Folie
 \frametitle{Singleton und Konfigruation in INI Datei} %%Folientitel
 
-\begin{lstlisting}[language=PHP]
+\begin{lstlisting}[language=PHP, caption=config.ini]
 database_type = mysql
 database_port = 3306
 database_name = dba02
@@ -232,7 +232,7 @@ database_verbose = 0
 application_debugging = 0
 \end{lstlisting} 
 
-\begin{lstlisting}[language=PHP]
+\begin{lstlisting}[language=PHP, caption=Config Klasse]
 $conf = \Config::getInstance();
 $debug = $conf->application_debugging;
 \end{lstlisting} 
@@ -270,7 +270,7 @@ $debug = $conf->application_debugging;
 	  \end{itemize}
   \end{block}
   
-\begin{lstlisting}[language=PHP]
+\begin{lstlisting}[language=PHP, caption=Template Engine]
 $this->view->setTemplate('surveys');
 $this->view->assign('surveys', $this->model->getSurveys());
 $this->view->display();
@@ -288,6 +288,25 @@ $this->view->display();
   		\item SQL-Injection Vorbeugung
 	  \end{itemize}
   \end{block} 
+\end{frame}
+
+\begin{frame}[fragile] %%Eine Folie
+  \frametitle{SQL-Injection Beispiel} %%Folientitel
+
+\begin{lstlisting}[language=PHP, caption=PHP Code der nicht Existieren sollte!!]
+$user = $_GET['user'];
+$sql = "SELECT * FROM user WHERE name = '$user'";
+\end{lstlisting} 
+
+\begin{block}{URL Aufruf}
+http://meineseite.de/index.php?user=owned'; DROP TABLE user;
+\end{block}
+ 
+  \begin{alertblock}{Das Ausgeführte SQL Query}
+SELECT * FROM table WHERE key = 'owned'; DROP TABLE user;
+	\end{alertblock} 
+
+
 \end{frame}
 
 \section{Live Demo}
