@@ -249,7 +249,7 @@ morestring=[b]",
 \begin{frame}[fragile] %%Eine Folie
 \frametitle{SQL Data Definition Language} %%Folientitel
 
-\begin{lstlisting}[language=SQL, caption=database.sql]
+\begin{lstlisting}[language=SQL, caption=Survey]
 CREATE TABLE `Survey` (
  `ID` int(11) NOT NULL AUTO_INCREMENT,
  `Name` varchar(255) NOT NULL,
@@ -261,7 +261,7 @@ CREATE TABLE `Survey` (
 \begin{frame}[fragile] %%Eine Folie
 \frametitle{SQL Data Definition Language} %%Folientitel
 
-\begin{lstlisting}[language=SQL, caption=database.sql]
+\begin{lstlisting}[language=SQL, caption=SurveyItems]
 CREATE TABLE `SurveyItems` (
  `ID` int(11) NOT NULL AUTO_INCREMENT,
  `Name` varchar(255) NOT NULL,
@@ -275,7 +275,7 @@ CREATE TABLE `SurveyItems` (
 
 \begin{frame}[fragile] %%Eine Folie
 \frametitle{SQL Data Definition Language} %%Folientitel
-\begin{lstlisting}[language=SQL, caption=database.sql]
+\begin{lstlisting}[language=SQL, caption=SurveyAnswer]
 CREATE TABLE `SurveyAnswer` (
  `ID` int(11) NOT NULL AUTO_INCREMENT,
  `TimeStamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -290,7 +290,7 @@ CREATE TABLE `SurveyAnswer` (
 
 \begin{frame}[fragile] %%Eine Folie
 \frametitle{SQL Data Definition Language} %%Folientitel
-\begin{lstlisting}[language=SQL, caption=database.sql]
+\begin{lstlisting}[language=SQL, caption=User]
 CREATE TABLE `User` (
  `ID` int(11) NOT NULL AUTO_INCREMENT,
  `Name` varchar(64) NOT NULL,
@@ -304,7 +304,7 @@ CREATE TABLE `User` (
 
 \begin{frame}[fragile] %%Eine Folie
 \frametitle{SQL Data Definition Language} %%Folientitel
-\begin{lstlisting}[language=SQL, caption=database.sql]
+\begin{lstlisting}[language=SQL, caption=Benutzer anlegen]
 INSERT INTO `User` (
  `ID` ,
  `Name` ,
@@ -533,7 +533,7 @@ public function addSurvey($name, $answerArr) {
 \begin{frame} %%Eine Folie
   \frametitle{Live Demo} %%Folientitel
   \begin{center}  
-      \Huge	Please wait ... we are connecting ;-)
+      \Huge	\url{http://www.dba02.studieren-und-arbeiten.de}		
   \end{center}
 \end{frame}
 
