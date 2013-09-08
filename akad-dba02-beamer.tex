@@ -445,6 +445,90 @@ SELECT * FROM table WHERE key = 'owned'; DROP TABLE user;
 
 \end{frame}
 
+\begin{frame}[fragile] %%Eine Folie
+  \frametitle{Umfragename holen} %%Folientitel
+
+\begin{lstlisting}[language=PHP, caption=getSurveyName Funktion]
+function getSurveyName($survey) {
+		
+    $stmt = $this->dbh->prepare("SELECT Name FROM Survey WHERE ID = :id");
+    $stmt->bindParam(':id', $survey);
+    $stmt->execute();
+    $res = $stmt->fetchObject();
+
+    return $res->Name;
+		
+}
+\end{lstlisting} 
+\end{frame}
+
+\begin{frame}[fragile] %%Eine Folie
+  \frametitle{Umfrage Ergebnisse holen} %%Folientitel
+
+\begin{lstlisting}[language=PHP, caption=getSurveyResult Funktion]
+public function getSurveyResult($survey) {
+		
+    $stmt = $this->dbh->prepare("SELECT i.Name, COUNT(a.ID) as cnt FROM SurveyItems i LEFT JOIN SurveyAnswer a ON i.ID = a. SurveyItemID WHERE i.SurveyID = :id GROUP BY Name ORDER BY i.Name");
+    $stmt->bindParam(':id', $survey);
+    $stmt->execute();
+		
+    return $stmt->fetchAll();
+		
+}
+\end{lstlisting} 
+\end{frame}
+
+\begin{frame}[fragile] %%Eine Folie
+  \frametitle{Abgegebene Antworten Speichern} %%Folientitel
+
+\begin{lstlisting}[language=PHP, caption=saveNewAnswers Funktion]
+public function saveNewAnswers($answerArr) {
+
+    $stmt = $this->dbh->prepare("INSERT INTO SurveyAnswer SET SurveyItemID = :id");
+		
+    foreach ($answerArr as $answer) {
+
+        $stmt->bindParam(':id', $answer);
+        $stmt->execute();	
+			
+    }
+	
+}
+\end{lstlisting} 
+\end{frame}
+
+\begin{frame}[fragile, shrink] %%Eine Folie
+  \frametitle{neue Umfrage hinzufügen} %%Folientitel
+
+\begin{lstlisting}[language=PHP, caption=addSurvey Funktion]
+public function addSurvey($name, $answerArr) {
+		
+    if (empty($name)) return;
+		
+    $stmt = $this->dbh->prepare("INSERT INTO Survey SET Name = :name");
+    $stmt->bindParam(':name', $name);
+		
+    $stmt->execute();
+
+    $surveyID = $this->dbh->lastInsertId();
+		
+    $stmt = $this->dbh->prepare("INSERT INTO SurveyItems SET Name = :name, SurveyID = :id");
+		
+    $stmt->bindParam(':id', $surveyID);
+
+    foreach ($answerArr as $answer) {
+
+        if (!empty($answer)) {
+            $stmt->bindParam(':name', $answer);
+            $stmt->execute();
+        }
+			
+    }
+		
+}
+\end{lstlisting} 
+\end{frame}
+
 \section{Live Demo}
 \begin{frame} %%Eine Folie
   \frametitle{Live Demo} %%Folientitel
