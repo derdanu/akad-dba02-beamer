@@ -143,6 +143,7 @@ morestring=[b]",
   		\item Eclipse
   		\item Git
   		\item Dia \footnote{\url{http://live.gnome.org/Dia}}
+  		\item \url{http://www.dba02.studieren-und-arbeiten.de}
 	  \end{itemize}
   \end{block}  
 \end{frame}
@@ -159,34 +160,162 @@ morestring=[b]",
 \begin{frame} %%Eine Folie
   \frametitle{UML Modell} %%Folientitel
   	\begin{figure}
-	   \includegraphics[scale=0.4]{akad_logo.png}
+	   \includegraphics[scale=0.4]{database.png}
 		\caption{UML Modell}
 	\end{figure}
-\end{frame}
+	\begin{block}{}		
+	\begin{itemize}[]
+		\item Flache Struktur
+		\item Minimaler Aufbau für Umfragesystem mit Usern
+	\end{itemize}
+\end{block}\end{frame}
 
 \subsection{Relationen Modell}
 \begin{frame} %%Eine Folie
-\begin{block}{Relationen Modell}		
-	\begin{itemize}[]
-		\item Punkt 1
-		\item Punkt 2
-		\item und der dritte Punkt
-	\end{itemize}
-\end{block}
+
+	\begin{block}{Relationen Modell}		
+		\begin{itemize}[]
+			\item 3te Normalform
+			\item Keine Redundanz
+		\end{itemize}
+	\end{block}
+
+
+\begin{table}
+\begin{tabular}{|l|l|} \hline\hline
+\textbf{ID} & \textbf{Name} \\
+\hline
+1 & Wie findest du dieses Seite? \\
+\hline\hline
+\end{tabular}
+\caption{Survey}
+\end{table}
+
+\end{frame}
+
+
+\begin{frame} %%Eine Folie
+  \frametitle{Relationen Modell} %%Folientitel
+\begin{table}
+\begin{tabular}{|l|l|l|} \hline\hline
+\textbf{ID} & \textbf{Name} & \textbf{SurveyID}\\
+\hline
+1 & Super & 1 \\
+2 & Fett & 1 \\
+\hline\hline
+\end{tabular}
+\caption{SurveyItems}
+\end{table}
+
+
+
+\begin{table}
+\begin{tabular}{|l|l|r|} \hline\hline
+\textbf{ID} & \textbf{TimeStamp}  & \textbf{SurveyItemID}\\
+\hline
+1 & 2013-08-29 19:53:55 & 2 \\
+2 & 2013-08-29 19:53:55 & 1 \\
+\hline\hline
+\end{tabular}
+\caption{SurveyAnswer}
+\end{table}
+
+\end{frame}
+
+
+\begin{frame} %%Eine Folie
+  \frametitle{Relationen Modell} %%Folientitel
+
+\begin{table}
+\begin{tabular}{|l|l|l|l|} \hline\hline
+\textbf{ID} & \textbf{Name}  & \textbf{Passwort} & \textbf{LastLogIn}\\
+\hline
+1 & admin & test & 0000-00-00 00:00:00 \\
+\hline\hline
+\end{tabular}
+  \caption{User}
+  \end{table}
+
+	\begin{block}{}		
+		\begin{itemize}[]
+			\item Gute Performance 
+		\end{itemize}
+	\end{block}
+
 \end{frame}
 
 
 \subsection{SQL DDL}
-\begin{frame} %%Eine Folie
-\begin{block}{SQL Data Definition Language}		
-	\begin{itemize}[]
-		\item Punkt 1
-		\item Punkt 2
-		\item und der dritte Punkt
-	\end{itemize}
-\end{block}
+\begin{frame}[fragile] %%Eine Folie
+\frametitle{SQL Data Definition Language} %%Folientitel
 
+\begin{lstlisting}[language=SQL, caption=database.sql]
+CREATE TABLE `Survey` (
+ `ID` int(11) NOT NULL AUTO_INCREMENT,
+ `Name` varchar(255) NOT NULL,
+ PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+\end{lstlisting} 
 \end{frame}
+
+\begin{frame}[fragile] %%Eine Folie
+\frametitle{SQL Data Definition Language} %%Folientitel
+
+\begin{lstlisting}[language=SQL, caption=database.sql]
+CREATE TABLE `SurveyItems` (
+ `ID` int(11) NOT NULL AUTO_INCREMENT,
+ `Name` varchar(255) NOT NULL,
+ `SurveyID` int(11) NOT NULL,
+ PRIMARY KEY (`ID`),
+ KEY `SurveyID` (`SurveyID`),
+ CONSTRAINT `SurveyItems_ibfk_2` FOREIGN KEY (`SurveyID`) REFERENCES `Survey` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+\end{lstlisting} 
+\end{frame}
+
+\begin{frame}[fragile] %%Eine Folie
+\frametitle{SQL Data Definition Language} %%Folientitel
+\begin{lstlisting}[language=SQL, caption=database.sql]
+CREATE TABLE `SurveyAnswer` (
+ `ID` int(11) NOT NULL AUTO_INCREMENT,
+ `TimeStamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ `SurveyItemID` int(11) NOT NULL,
+ PRIMARY KEY (`ID`),
+ KEY `SurveyItemID` (`SurveyItemID`),
+ CONSTRAINT `SurveyAnswer_ibfk_2` FOREIGN KEY (`SurveyItemID`) REFERENCES `SurveyItems` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+\end{lstlisting} 
+\end{frame}
+
+
+\begin{frame}[fragile] %%Eine Folie
+\frametitle{SQL Data Definition Language} %%Folientitel
+\begin{lstlisting}[language=SQL, caption=database.sql]
+CREATE TABLE `User` (
+ `ID` int(11) NOT NULL AUTO_INCREMENT,
+ `Name` varchar(64) NOT NULL,
+ `Passwort` varchar(64) NOT NULL,
+ `LastLogIn` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+ PRIMARY KEY (`ID`),
+ UNIQUE KEY `Name` (`Name`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+\end{lstlisting} 
+\end{frame}
+
+\begin{frame}[fragile] %%Eine Folie
+\frametitle{SQL Data Definition Language} %%Folientitel
+\begin{lstlisting}[language=SQL, caption=database.sql]
+INSERT INTO `User` (
+ `ID` ,
+ `Name` ,
+ `Passwort` ,
+ `LastLogIn`
+) VALUES (
+ NULL , 'admin', 'test', '0000-00-00 00:00:00'
+);
+\end{lstlisting} 
+\end{frame}
+
 
 \section{Programmcode}
 \begin{frame}[shrink] %%Eine Folie
@@ -203,6 +332,12 @@ morestring=[b]",
   		\item OOP \footnote{Objektorientierte Programmierung}
 		\item Namespaces
   		\item Klassen Autoloader
+		\item 1426 Zeilen
+		\begin{itemize}
+			\item 525 Zeilen Code
+			\item 526 Zeilen Kommentare
+			\item 375 Leerzeilen ;-)
+	        \end{itemize}
 	  \end{itemize}
   \end{block} 
 \end{frame}
@@ -330,7 +465,8 @@ SELECT * FROM table WHERE key = 'owned'; DROP TABLE user;
 	\end{block}
 	\begin{block}{Links}	
 		\begin{itemize}
-			\item \url{https://github.com/derdanu/akad-dba02-beamer}						
+			\item \url{https://github.com/derdanu/akad-dba02-beamer}	
+			\item \url{http://www.dba02.studieren-und-arbeiten.de}					
 		\end{itemize}
 	\end{block}
 \end{frame}
