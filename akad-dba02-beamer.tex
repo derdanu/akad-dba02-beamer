@@ -450,7 +450,7 @@ SELECT * FROM table WHERE key = 'owned'; DROP TABLE user;--'
   \frametitle{Umfragename holen} %%Folientitel
 
 \begin{lstlisting}[language=PHP, caption=getSurveyName Funktion]
-function getSurveyName($survey) {
+public function getSurveyName($survey) {
 		
     $stmt = $this->dbh->prepare("SELECT Name FROM Survey WHERE ID = :id");
     $stmt->bindParam(':id', $survey);
